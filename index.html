@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PhD Life D-Day Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+    }
+    .progress-container {
+      width: 100%;
+      background-color: #f3f3f3;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 1rem;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 30px;
+      width: 0%;
+      background-color: #4caf50;
+      text-align: center;
+      line-height: 30px;
+      color: white;
+      transition: width 0.5s ease;
+    }
+    label, input, button {
+      display: block;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>PhD Life D-Day Counter</h1>
+  
+  <label for="start-date">PhD Start Date:</label>
+  <input type="date" id="start-date">
+  
+  <label for="end-date">PhD End Date:</label>
+  <input type="date" id="end-date">
+  
+  <button onclick="updateProgress()">Calculate Progress</button>
+
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar">0%</div>
+  </div>
+
+  <script>
+    function updateProgress() {
+      const startDateInput = document.getElementById("start-date").value;
+      const endDateInput = document.getElementById("end-date").value;
+      
+      if (!startDateInput || !endDateInput) {
+        alert("Please enter both start and end dates.");
+        return;
+      }
+      
+      const startDate = new Date(startDateInput);
+      const endDate = new Date(endDateInput);
+      const today = new Date();
+      
+      // Basic validation
+      if (today < startDate) {
+        alert("Your PhD hasn't started yet!");
+        return;
+      }
+      if (today > endDate) {
+        alert("Your PhD has already finished!");
+        return;
+      }
+      
+      // Calculate total days and days passed
+      const totalDays = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+      const passedDays = Math.round((today - startDate) / (1000 * 60 * 60 * 24));
+      const percentage = Math.round((passedDays / totalDays) * 100);
+      
+      // Update progress bar
+      const progressBar = document.getElementById("progress-bar");
+      progressBar.style.width = percentage + "%";
+      progressBar.textContent = percentage + "%";
+    }
+  </script>
+</body>
+</html>
