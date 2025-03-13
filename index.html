@@ -9,42 +9,62 @@
       font-family: Arial, sans-serif;
       margin: 2rem;
     }
+    h1 {
+      text-align: center;
+    }
+    .date-inputs {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .date-inputs div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    button {
+      display: block;
+      margin: 1rem auto;
+    }
     .progress-container {
-      width: 100%;
+      width: 80%;
+      margin: 1rem auto;
       background-color: #f3f3f3;
       border: 1px solid #ccc;
       border-radius: 4px;
-      margin-top: 1rem;
       overflow: hidden;
     }
     .progress-bar {
-      height: 30px;
+      height: 40px; /* Thicker bar */
       width: 0%;
       background-color: #4caf50;
       text-align: center;
-      line-height: 30px;
+      line-height: 40px;
       color: white;
       transition: width 0.5s ease;
-    }
-    label, input, button {
-      display: block;
-      margin-top: 0.5rem;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <h1>PhD Life D-Day Counter</h1>
   
-  <label for="start-date">PhD Start Date:</label>
-  <input type="date" id="start-date">
-  
-  <label for="end-date">PhD End Date:</label>
-  <input type="date" id="end-date">
+  <div class="date-inputs">
+    <div>
+      <label for="start-date">PhD Start Date:</label>
+      <input type="date" id="start-date">
+    </div>
+    <div>
+      <label for="end-date">PhD End Date:</label>
+      <input type="date" id="end-date">
+    </div>
+  </div>
   
   <button onclick="updateProgress()">Calculate Progress</button>
 
   <div class="progress-container">
-    <div class="progress-bar" id="progress-bar">0%</div>
+    <div class="progress-bar" id="progress-bar">D-0</div>
   </div>
 
   <script>
@@ -71,15 +91,16 @@
         return;
       }
       
-      // Calculate total days and days passed
+      // Calculate total days, days passed, and days left
       const totalDays = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
       const passedDays = Math.round((today - startDate) / (1000 * 60 * 60 * 24));
+      const daysLeft = totalDays - passedDays;
       const percentage = Math.round((passedDays / totalDays) * 100);
       
-      // Update progress bar
+      // Update progress bar width and display D-x day label
       const progressBar = document.getElementById("progress-bar");
       progressBar.style.width = percentage + "%";
-      progressBar.textContent = percentage + "%";
+      progressBar.textContent = "D-" + daysLeft;
     }
   </script>
 </body>
